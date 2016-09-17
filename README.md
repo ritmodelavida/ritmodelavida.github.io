@@ -1,2 +1,4 @@
-# ritmodelavida.github.io
-main site
+# ritmodelavida
+Copyright 2016 Diógenes Ballester
+
+https://ritmodelavida.github.io/ritmodelavida/index.html
