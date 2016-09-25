@@ -2,7 +2,7 @@
 <html> <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>MEMORIA DE LA NATURALEZA: EL RITMO DE LA VIDA - por Diógenes Ballester</title>
+<title>MEMORY OF NATURE: THE RHYTHM OF LIFE - by Diógenes Ballester</title>
 <link rel="stylesheet" type="text/css" href="css/memnat.css">
   <link rel="stylesheet" href="css/gridism.css">
 </head>
@@ -20,13 +20,39 @@ var Motion = ReactMotion.Motion
 ,   spring = ReactMotion.spring
 ;
 
+function draw() {
+    //Get the canvas & context
+    var c = $('#respondCanvas');
+    var ct = c.get(0).getContext('2d');
+    var container = $(c).parent();
+    var x = c.width();
+    var y = c.height();
+var mot = $('#main');
+var dx = mot.attr('data-drawx'),
+dy = mot.attr('data-drawy') ,
+dw = mot.attr('data-draww') ,
+dh = mot.attr('data-drawh') ,
+dr = mot.attr('data-drawr');
+//console.log(dx, dy, dw, dh, dr);
+    var minwh = x;
+    if (y < minwh) {
+        minwh = y;
+    }
+    var im = new Image();
+im.src = "img/Manifiesto_I_graynew_crop1_rot.jpg";
+ct.clearRect(0,0,x,y);
+//ct.rotate(dr*Math.PI/180);
+ct.drawImage(im, dx*minwh, dy*minwh, dw*minwh, dh*minwh);
+}
+
+
 var Clock = React.createClass({
 	getInitialState: function () {
 		return { baseDate: new Date(), hours: 0, mins: 0,
 	secs: 0, sunriseHour: 5, sunriseMinute: 56, rots: 0, sca: 1.0,
     tranx: 0, trany: 0, disp1: 'block', disp2: 'none', disp3: 'none',
-disp4: 'none', disp5: 'none',
-clocktext:'', clocklink:''
+disp4: 'none', disp5: 'none', clocktext:'', clocklink:'', dx: 0, dy:
+	0, dw: 0, dh: 0, dr: 0
 };
 	},
 	componentDidMount: function () {
@@ -37,10 +63,8 @@ clocktext:'', clocklink:''
 		,   width     = node.clientWidth
 		,   height    = node.clientHeight
         ;
-        major.width = 0;
-        major.height = 0;
 
-		// start with initial state base date
+                // Start with initial state base date
 		this.setBaseDate(this.state.baseDate);
 		// begin aggressively calculating updates
 		window.requestAnimationFrame(this.tick);
@@ -705,30 +729,45 @@ var clockTexts2 = [
     clockState.clocktext2 = clockTexts2[clockState.majorNum];
 
 var clockLinks = [
-'memnat_art_es.html#akash',
-'memnat_art_es.html#vayu',
-'memnat_art_es.html#tejas',
-'memnat_art_es.html#prithvi',
-'memnat_art_es.html#apas',
+'memnat_art_en.html#akash',
+'memnat_art_en.html#vayu',
+'memnat_art_en.html#tejas',
+'memnat_art_en.html#prithvi',
+'memnat_art_en.html#apas'
 ];
     clockState.clocklink = clockLinks[clockState.majorNum];
+
+var dxywh = [
+{dx: 0, dy: 0, dw: 1, dh: 1, dr: 0},
+{dx: -1, dy: 0, dw: 3, dh: 3, dr: -360},
+{dx: -1, dy: -2, dw: 3, dh: 3, dr: 360},
+{dx: -2, dy: -1, dw: 3, dh: 3, dr: -360},
+{dx: 0, dy: -1, dw: 3, dh: 3, dr: 360},
+];
+clockState.dx = dxywh[clockState.majorNum].dx;
+clockState.dy = dxywh[clockState.majorNum].dy;
+clockState.dw = dxywh[clockState.majorNum].dw;
+clockState.dh = dxywh[clockState.majorNum].dh;
+clockState.dr = dxywh[clockState.majorNum].dr;
 
 		this.setState(clockState);
 		window.requestAnimationFrame(this.tick); // resume updates at 60fps
 	},
 	// only allow render when there's a value change
 	shouldComponentUpdate: function (nextProps, nextState) {
-		return (
-			nextState.hours !== this.state.hours || 
+var ret = nextState.hours !== this.state.hours || 
 			nextState.mins !== this.state.mins ||
-			nextState.secs !== this.state.secs
-		);
+nextState.secs !== this.state.secs;
+
+draw();
+
+return ret;
 	},
 	render: function () {
 		return (
 			<div className="clock-component center">
 
-				<Motion style={{
+				<Motion id="mot" style={{
 					hours: spring(this.state.hours),
 					mins: spring(this.state.mins),
 					secs: spring(this.state.secs),
@@ -741,58 +780,35 @@ var clockLinks = [
 			  disp3: this.state.disp3,
 			  disp4: this.state.disp4,
 			  disp5: this.state.disp5,
-			  clocketxt: this.state.clocktext,
+			  clocktext: this.state.clocktext,
 			  clocklink: this.state.clocklink,
 			  linktext: this.state.linktext,
-			  clocktext2: this.state.clocktext2
+			  clocktext2: this.state.clocktext2,
+			  drx: spring(this.state.dx, [25, 13]),
+			  dry: spring(this.state.dy, [25, 13]),
+			  drw: spring(this.state.dw, [25, 13]),
+			  drh: spring(this.state.dh, [25, 13]),
+			  drr: spring(this.state.dr, [25, 13]),
 				}}>
-				{({hours,mins,secs,rots,sca,tranx,trany,disp1,disp2,disp3,disp4,disp5,clocktext}) =>
-					<div className="hands center">
-					  <img ref="clock1" className="clock1"
-		src="img/Manifiesto_I_graynew_crop1_rot.jpg"
-					  alt="Image" 
-					  style={{
-					  display: `${disp1}`,
-					  }}
-					  ></img>
+				{({hours,mins,secs,rots,sca,tranx,trany,disp1,disp2,disp3,disp4,disp5,clocktext,clocklink,linktext,clocktext2,drx,dry,drw,drh,drr}) =>
 
-					  <img ref="clock1" className="clock1"
-		src="img/Manifiesto_I_graynew_crop1_rot_vayu.jpg"
-					  alt="Image" 
-					  style={{
-					  display: `${disp2}`,
-					  }}
-					  ></img>
+			<div id="main" role="main"
+			  data-drawx={`${drx}`}
+			  data-drawy={`${dry}`}
+			  data-draww={`${drw}`}
+			  data-drawh={`${drh}`}
+			  data-drawr={`${drr}`}
+			  >
+	    <canvas id="respondCanvas" width="100" height="100">
+      Canvas not supported in your browser.
+	    </canvas>
+    </div>
 
-					  <img ref="clock1" className="clock1"
-		src="img/Manifiesto_I_graynew_crop1_rot_tejas.jpg"
-					  alt="Image" 
-					  style={{
-					  display: `${disp3}`,
-					  }}
-					  ></img>
 
-					  <img ref="clock1" className="clock1"
-		src="img/Manifiesto_I_graynew_crop1_rot_prithvi.jpg"
-					  alt="Image" 
-					  style={{
-					  display: `${disp4}`,
-					  }}
-					  ></img>
-
-					  <img ref="clock1" className="clock1"
-		src="img/Manifiesto_I_graynew_crop1_rot_apas.jpg"
-					  alt="Image" 
-					  style={{
-					  display: `${disp5}`,
-					  }}
-					  ></img>
-
-					</div>
-		}
+			  }
 					</Motion>
 					
-				<div className="unit whole center"></div>
+
 			<div className="unit whole center sunrise ztop">
 			  Fecha: {this.format(this.state.dateNum)}&nbsp;
 			  Hora: {this.format(this.state.hoursDisp%12 +
@@ -800,13 +816,12 @@ var clockLinks = [
 		&nbsp; Alba: {this.state.sunriseHour%12}:
         {this.format(this.state.sunriseMinute%60)} Mayor: {this.state.majorName} Menor: {this.state.minorName}
         </div>
-
 	<div className="unit whole left">
-	  <p className="">{this.state.clocktext} &nbsp;
+	  <p className="" >{this.state.clocktext} &nbsp;
 	  <a href={this.state.clocklink}>{this.state.linktext}</a> {this.state.clocktext2}
 	  </p>
 	  <p className="">
-	  Cada Tattwa  se cree que es la principal fuerza vibratoria
+	 Cada Tattwa  se cree que es la principal fuerza vibratoria
 	  de la energía en la tierra durante 24 minutos en su
 	  rotación durante todo el día. El reloj digital universal en
 	  esta página está sincronizado con las imágenes de las
@@ -823,7 +838,36 @@ var clockLinks = [
 			</div>
 		);
 	}
-});
+			});
+
+
+$(document).ready( function(){
+    
+    //Get the canvas & context
+    var c = $('#respondCanvas');
+    var ct = c.get(0).getContext('2d');
+    var container = $(c).parent();
+    
+    //Run function when browser  resize
+    $(window).resize( respondCanvas );
+    
+    function respondCanvas(){
+	console.log('respondCanvas() width', $(container).width(),
+	'height', $(container).height(), 'win.innerWidth',
+	window.innerWidth, 'win.innerHeight', window.innerHeight);		
+        var minwh = $(container).height();
+        if ($(container).width() < minwh) {
+            minwh = $(container).width();
+        }
+	c.attr('height', window.innerWidth - 80);
+	c.attr('width', window.innerWidth - 80);
+    }
+    //Initial call
+    respondCanvas();
+    }
+);
+
+
 var ClockExample = React.createClass({
 	getInitialState: function () { return {}; },
 	getVal: function (name) {
