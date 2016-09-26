@@ -33,7 +33,7 @@ var Clock = React.createClass({
 	secs: 0, sunriseHour: 5, sunriseMinute: 56, rots: 0, sca: 1.0,
 tranx: 0, trany: 0,
 disp1: 'none', disp2: 'none', disp3: 'none', disp4: 'none', disp5: 'none',
-opac1: '1.0', opac2: '0.3', opac3: '0.3', opac4: '0.3', opac5: '0.3',
+opac1: '1.0', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
 };
 	},
 	componentDidMount: function () {
@@ -63,7 +63,7 @@ opac1: '1.0', opac2: '0.3', opac3: '0.3', opac4: '0.3', opac5: '0.3',
 		this.setState({ baseDate: date, sunriseHour: 0,
                   sunriseMinute: 0, dateNum: 0,
                   disp1:'none',disp2:'none', disp3:'none', disp4:'none', disp5:'none',
-opac1: '1.0', opac2: '0.3', opac3: '0.3', opac4: '0.3', opac5: '0.3',
+opac1: '1.0', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
 });
 		this.startTick = new Date(); // re-establish starting point
 	},
@@ -660,19 +660,19 @@ return 18;
     clockState.minorName = phases[clockState.minorNum];
     var phaseTransforms = [
 {disp1:'block',disp2:'none',disp3:'none',disp4:'none',disp5:'none',
-opac1: '1.0', opac2: '0.3', opac3: '0.3', opac4: '0.3', opac5: '0.3',
+opac1: '1.0', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
 },
 {disp1:'none',disp2:'block',disp3:'none',disp4:'none',disp5:'none',
-opac1: '0.3', opac2: '1.0', opac3: '0.3', opac4: '0.3', opac5: '0.3',
+opac1: '0.2', opac2: '1.0', opac3: '0.2', opac4: '0.2', opac5: '0.2',
 },
 {disp1:'none',disp2:'none',disp3:'block',disp4:'none',disp5:'none',
-opac1: '0.3', opac2: '0.3', opac3: '1.0', opac4: '0.3', opac5: '0.3',
+opac1: '0.2', opac2: '0.2', opac3: '1.0', opac4: '0.2', opac5: '0.2',
 },
 {disp1:'none',disp2:'none',disp3:'none',disp4:'block',disp5:'none',
-opac1: '0.3', opac2: '0.3', opac3: '0.3', opac4: '1.0', opac5: '0.3',
+opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '1.0', opac5: '0.2',
 },
 {disp1:'none',disp2:'none',disp3:'none',disp4:'none',disp5:'block',
-opac1: '0.3', opac2: '0.3', opac3: '0.3', opac4: '0.3', opac5: '1.0',
+opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '1.0',
 },
     ];
 
