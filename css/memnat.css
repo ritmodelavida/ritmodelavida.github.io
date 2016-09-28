@@ -47,7 +47,11 @@ a {
 }
 
 .minor {
-    width: 40%;
+    width: 100%;
+    display: block;
+    margin: auto;
+    -webkit-transition: opacity 5s;
+    transition: opacity 5s;
 }
 
 .center {
