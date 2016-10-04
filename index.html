@@ -808,13 +808,22 @@ return ret;
 			  Time: {this.format(this.state.hoursDisp%12 +
 			this.state.pmPlus)}:{this.format(this.state.minsDisp%60)}:{this.format(this.state.secsDisp%60)}
 		&nbsp; Dawn: {this.state.sunriseHour%12}:
-        {this.format(this.state.sunriseMinute%60)} Major: {this.state.majorName} Minor: {this.state.minorName}
+        {this.format(this.state.sunriseMinute%60)} Major: <i>{this.state.majorName}</i> Minor: <i>{this.state.minorName}</i>
         </div>
 	<div className="unit whole left">
 	  <p className="" >{this.state.clocktext} &nbsp;
-	  <a href={this.state.clocklink}>{this.state.linktext}</a> {this.state.clocktext2}
+	  <a href={this.state.clocklink}><i>{this.state.linktext}</i></a> {this.state.clocktext2}
 	  </p>
-<p className="">Each Tattwa is believed to be the major vibrating force of energy on the earth for 24 minutes in rotation through out the day. The universal digital clock on this page is synchronized with images of the figures on bikes replicated from the floor painting. As the Tattwa moves from one energy to the next, as measured by the universal clock, the image on this page rotates and lights up to indicate the Tattwa that is the major energy force during this time frame and focus your attention towards the direction and painting that to the artist is symbolic of that Tattwa.</p>
+<p className="">Each <i>Tattwa</i> is believed to be the major
+			  vibrating force of energy on the earth for
+			  24 minutes in rotation through out the
+			  day. The universal digital clock on this
+			  page is synchronized with images of the
+			  figures on bikes replicated from the floor
+			  painting. As the <i>Tattwa</i> moves from
+			  one energy to the next, as measured by the
+			  universal clock, the image on this page
+			  rotates to indicate the <i>Tattwa</i> that is the major energy force during this time frame and focus your attention towards the direction and painting that to the artist is symbolic of that <i>Tattwa</i>.</p>
 	</div>
 			</div>
 		);
@@ -892,11 +901,12 @@ ReactDOM.render(<ClockExample />, document.getElementById('app'));
 
 <div class="unit whole center ztop">
   
-  <a  href="memnat_stmt_en.html">Exhibition Statement</a> &nbsp;
+  <a  href="memnat_intro_en.html">Foreword</a> &nbsp;
+  <a  href="memnat_stmt_en.html">Statement</a> &nbsp;
   <a  href="memnat_manif_en.html">Manifesto</a> &nbsp;
-  <a  href="memnat_clock1_en.html">Clock 1</a> &nbsp; 
+  <b>Clock 1</b>&nbsp; 
   <a  href="memnat_clock2_en.html">Clock 2</a> &nbsp;
-  <a  href="memnat_art_en.html">List of Artworks Integrated to the Installation</a>
+  <a  href="memnat_art_en.html">List of Artworks</a>
   
 </div>
 

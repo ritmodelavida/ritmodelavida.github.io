@@ -711,11 +711,11 @@ que representa las emociones y el magnetismo, corresponde a la pintura titulada'
     clockState.clocktext = clockTexts[clockState.majorNum];
 
 var linkTexts = [
-'“Manifiesto de un arteologista”',
+'“Manifiesto de un Arteologista”',
 '“Vayú / Respirando”',
 '“Archivos Akáshicos”',
 '“Pensamiento Taíno”',
-'“Punto de origen”'
+'“Punto de Origen”'
 ];
     clockState.linktext = linkTexts[clockState.majorNum];
 
@@ -729,11 +729,11 @@ var clockTexts2 = [
     clockState.clocktext2 = clockTexts2[clockState.majorNum];
 
 var clockLinks = [
-'memnat_art_en.html#akash',
-'memnat_art_en.html#vayu',
-'memnat_art_en.html#tejas',
-'memnat_art_en.html#prithvi',
-'memnat_art_en.html#apas'
+'memnat_art_es.html#akash',
+'memnat_art_es.html#vayu',
+'memnat_art_es.html#tejas',
+'memnat_art_es.html#prithvi',
+'memnat_art_es.html#apas'
 ];
     clockState.clocklink = clockLinks[clockState.majorNum];
 
@@ -814,25 +814,25 @@ return ret;
 			  Hora: {this.format(this.state.hoursDisp%12 +
 			this.state.pmPlus)}:{this.format(this.state.minsDisp%60)}:{this.format(this.state.secsDisp%60)}
 		&nbsp; Alba: {this.state.sunriseHour%12}:
-        {this.format(this.state.sunriseMinute%60)} Mayor: {this.state.majorName} Menor: {this.state.minorName}
+        {this.format(this.state.sunriseMinute%60)} Mayor: <i>{this.state.majorName}</i> Menor: <i>{this.state.minorName}</i>
         </div>
 	<div className="unit whole left">
 	  <p className="" >{this.state.clocktext} &nbsp;
-	  <a href={this.state.clocklink}>{this.state.linktext}</a> {this.state.clocktext2}
+	  <a href={this.state.clocklink}><i>{this.state.linktext}</i></a> {this.state.clocktext2}
 	  </p>
 	  <p className="">
-	 Cada Tattwa  se cree que es la principal fuerza vibratoria
+	 Cada <i>Tattwa</i>  se cree la principal fuerza vibratoria
 	  de la energía en la tierra durante 24 minutos en su
 	  rotación durante todo el día. El reloj digital universal en
 	  esta página está sincronizado con las imágenes de las
 	  figuras en las bicicletas representadas en  la pintura
-	  desplegada en el piso del museo. A medida que los Tattwas se
+	  desplegada en el piso del museo. A medida que los <i>Tattwas</i> se
 	  mueven de una energía a la siguiente, según lo medido por el
 	  reloj universal, la imagen en la página gira e indica la
-	  dirección del Tattwa como la fuerza principal de energía
+	  dirección del <i>Tattwa</i> como la fuerza principal de energía
 	  durante este periodo de tiempo y centraliza su atención
 	  hacia la dirección y la pintura correspondiente que para el
-	  artista es un símbolo de este Tattwa.
+	  artista es un símbolo de este <i>Tattwa</i>.
 	  </p>
 	</div>
 			</div>
@@ -911,11 +911,12 @@ ReactDOM.render(<ClockExample />, document.getElementById('app'));
 
 <div class="unit whole center ztop">
   
-  <a  href="memnat_stmt_es.html">Declaratoria de la Exposición</a> &nbsp;
+  <a  href="memnat_intro_es.html">Introducción</a> &nbsp;
+  <a  href="memnat_stmt_es.html">Declaratoria</a> &nbsp;
   <a  href="memnat_manif_es.html">Manifiesto</a> &nbsp;
-  <a  href="memnat_clock1_es.html">Reloj 1</a> &nbsp; 
+  <b>Reloj 1</b>&nbsp; 
   <a  href="memnat_clock2_es.html">Reloj 2</a> &nbsp;
-  <a  href="memnat_art_es.html">Lista de Obras Integradas a la Instalación</a>
+  <a  href="memnat_art_es.html">Lista de Obras</a>
   
 </div>
 
