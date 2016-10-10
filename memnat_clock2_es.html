@@ -34,6 +34,7 @@ var Clock = React.createClass({
 tranx: 0, trany: 0,
 disp1: 'none', disp2: 'none', disp3: 'none', disp4: 'none', disp5: 'none',
 opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
+minutesClock:0, hoursClock:0
 };
 	},
 	componentDidMount: function () {
@@ -93,8 +94,11 @@ opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
 
 
     var newNow = new Date();
+    clockState.minutesClock = newNow.getMinutes();
+    clockState.hoursClock = newNow.getHours();
+
     var dateNum = newNow.getFullYear() * 10000 + (newNow.getMonth() + 1) * 100 + newNow.getDate();
-    var yesterday = newNow;
+    var yesterday = new Date();
     yesterday.setDate(yesterday.getDate()-1);
     var yestDateNum = yesterday.getFullYear() * 10000 + (yesterday.getMonth() + 1) * 100 + yesterday.getDate();
     var sunriseCalendar = {
@@ -641,14 +645,15 @@ return 18;
     var sunriseTry1 = new Date(newNow.getFullYear(),
     newNow.getMonth(), newNow.getDate(), getSunriseHour(dateNum), getSunriseMinute(dateNum));
     var sunriseDate = sunriseTry1;
+    var useDateNum = dateNum;
     if (sunriseTry1 > newNow) { // After midnight, use yesterday sunrise
-       dateNum = yestDateNum;
+       useDateNum = yestDateNum;
        sunriseDate = new Date(yesterday.getFullYear(), yesterday.getMonth(),
            yesterday.getDate(),getSunriseHour(yestDateNum), getSunriseMinute(yestDateNum));
     }
 
-    clockState.sunriseHour = getSunriseHour(dateNum);
-    clockState.sunriseMinute = getSunriseMinute(dateNum);
+    clockState.sunriseHour = getSunriseHour(useDateNum);
+    clockState.sunriseMinute = getSunriseMinute(useDateNum);
     clockState.dateNum = dateNum;
     clockState.secsSinceDawn = Math.floor((newNow.valueOf() - sunriseDate.valueOf()) / 1000);
     var intervalSecs = 4 * 60 + 48;
@@ -849,8 +854,7 @@ var minorTexts = [
 	<div className="unit whole center"></div>
 			<div className="unit whole center sunrise ztop">
 			  Fecha: {this.format(this.state.dateNum)}&nbsp;
-			  Hora: {this.format(this.state.hoursDisp%12 +
-			this.state.pmPlus)}:{this.format(this.state.minsDisp%60)}:{this.format(this.state.secsDisp%60)}
+			  Hora: {this.format(this.state.hoursClock)}:{this.format(this.state.minutesClock)}:{this.format(this.state.secsDisp%60)}
 		&nbsp; Alba: {this.state.sunriseHour%12}:
 			  {this.format(this.state.sunriseMinute%60)}
     &nbsp; 
