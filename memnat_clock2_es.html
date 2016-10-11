@@ -663,6 +663,20 @@ return 18;
     var phases = ['Akash','Vayu','Tejas','Prithvi','Apas'];
     clockState.majorName = phases[clockState.majorNum];
     clockState.minorName = phases[clockState.minorNum];
+
+    var nextMinor = new Date(sunriseDate);
+    nextMinor.setSeconds(intervalSecs * (clockState.intervals + 1));
+    clockState.minorCountdown = Math.floor((nextMinor.getTime() - newNow.getTime()) / 1000);
+    clockState.minorMins = Math.floor(clockState.minorCountdown / 60);
+    clockState.minorSecs = clockState.minorCountdown - (clockState.minorMins * 60);
+
+    var nextMajor = new Date(sunriseDate);
+    var majorIntervals = Math.floor(clockState.secsSinceDawn / (intervalSecs*5));
+    nextMajor.setSeconds(intervalSecs * 5 * majorIntervals + (intervalSecs*5));
+    clockState.majorCountdown = Math.floor((nextMajor.getTime() - newNow.getTime()) / 1000);
+    clockState.majorMins = Math.floor(clockState.majorCountdown / 60);
+    clockState.majorSecs = clockState.majorCountdown - (clockState.majorMins * 60);
+
     var phaseTransforms = [
 {disp1:'block',disp2:'none',disp3:'none',disp4:'none',disp5:'none',
 opac1: '1.0', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
@@ -858,7 +872,8 @@ var minorTexts = [
 		&nbsp; Alba: {this.state.sunriseHour%12}:
 			  {this.format(this.state.sunriseMinute%60)}
     &nbsp; 
-			  Mayor: <i>{this.state.majorName}</i> &nbsp; Menor: <i>{this.state.minorName}</i>&nbsp;
+			  Mayor: <i>{this.state.majorName}</i> ({this.format(this.state.majorMins)}:{this.format(this.state.majorSecs)})&nbsp;
+    Menor: <i>{this.state.minorName}</i> ({this.format(this.state.minorMins)}:{this.format(this.state.minorSecs)})&nbsp;
         </div>
 
 	<div className="unit whole left">{this.state.majorText}

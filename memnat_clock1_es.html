@@ -681,6 +681,20 @@ getSunriseHour(yestDateNum), getSunriseMinute(yestDateNum));
     var phases = ['Akash','Vayu','Tejas','Prithvi','Apas'];
     clockState.majorName = phases[clockState.majorNum];
     clockState.minorName = phases[clockState.minorNum];
+
+    var nextMinor = new Date(sunriseDate);
+    nextMinor.setSeconds(intervalSecs * (clockState.intervals + 1));
+    clockState.minorCountdown = Math.floor((nextMinor.getTime() - newNow.getTime()) / 1000);
+    clockState.minorMins = Math.floor(clockState.minorCountdown / 60);
+    clockState.minorSecs = clockState.minorCountdown - (clockState.minorMins * 60);
+
+    var nextMajor = new Date(sunriseDate);
+    var majorIntervals = Math.floor(clockState.secsSinceDawn / (intervalSecs*5));
+    nextMajor.setSeconds(intervalSecs * 5 * majorIntervals + (intervalSecs*5));
+    clockState.majorCountdown = Math.floor((nextMajor.getTime() - newNow.getTime()) / 1000);
+    clockState.majorMins = Math.floor(clockState.majorCountdown / 60);
+    clockState.majorSecs = clockState.majorCountdown - (clockState.majorMins * 60);
+
     var phaseTransforms = [
     	{rots:0,sca:2.2,tranx:0,trany:0,disp1:'block',disp2:'none',disp3:'none',disp4:'none',disp5:'none'},
       {rots:90,sca:2.0,tranx:-33,trany:0,disp1:'none',disp2:'block',disp3:'none',disp4:'none',disp5:'none'},
@@ -817,7 +831,7 @@ return ret;
 			  Fecha: {this.format(this.state.dateNum)}&nbsp;
 			  Hora: {this.format(this.state.hoursClock)}:{this.format(this.state.minutesClock)}:{this.format(this.state.secsDisp%60)}
 		&nbsp; Alba: {this.state.sunriseHour%12}:
-        {this.format(this.state.sunriseMinute%60)} Mayor: <i>{this.state.majorName}</i> Menor: <i>{this.state.minorName}</i>
+        {this.format(this.state.sunriseMinute%60)}&nbsp;Mayor: <i>{this.state.majorName}</i> ({this.format(this.state.majorMins)}:{this.format(this.state.majorSecs)})&nbsp;Menor: <i>{this.state.minorName}</i>  ({this.format(this.state.minorMins)}:{this.format(this.state.minorSecs)})
         </div>
 	<div className="unit whole left">
 	  <p className="" >{this.state.clocktext} &nbsp;
@@ -855,9 +869,9 @@ $(document).ready( function(){
     $(window).resize( respondCanvas );
     
     function respondCanvas(){
-	console.log('respondCanvas() width', $(container).width(),
-	'height', $(container).height(), 'win.innerWidth',
-	window.innerWidth, 'win.innerHeight', window.innerHeight);		
+	//console.log('respondCanvas() width', $(container).width(),
+	//'height', $(container).height(), 'win.innerWidth',
+	//window.innerWidth, 'win.innerHeight', window.innerHeight);		
         var minwh = $(container).height();
         if ($(container).width() < minwh) {
             minwh = $(container).width();
