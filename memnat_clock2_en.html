@@ -98,6 +98,10 @@ opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',
     clockState.hoursClock = newNow.getHours();
 
     var dateNum = newNow.getFullYear() * 10000 + (newNow.getMonth() + 1) * 100 + newNow.getDate();
+    clockState.year = newNow.getFullYear();
+    clockState.month = newNow.getMonth() + 1;
+    clockState.day = newNow.getDate();
+
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate()-1);
     var yestDateNum = yesterday.getFullYear() * 10000 + (yesterday.getMonth() + 1) * 100 + yesterday.getDate();
@@ -866,9 +870,9 @@ var minorTexts = [
 					</Motion>
 	<div className="unit whole center"></div>
 			<div className="unit whole center sunrise ztop">
-			  Date: {this.format(this.state.dateNum)}&nbsp;
+			  Date: {this.state.year}/{this.format(this.state.month)}/{this.format(this.state.day)}&nbsp;
 			  Time: {this.format(this.state.hoursClock)}:{this.format(this.state.minutesClock)}:{this.format(this.state.secsDisp%60)}
-		&nbsp; Dawn: {this.state.sunriseHour%12}:
+		&nbsp; Dawn: {this.format(this.state.sunriseHour%12)}:
 			  {this.format(this.state.sunriseMinute%60)}
     &nbsp; 
 			  Major: <i>{this.state.majorName}</i> ({this.format(this.state.majorMins)}:{this.format(this.state.majorSecs)})&nbsp;

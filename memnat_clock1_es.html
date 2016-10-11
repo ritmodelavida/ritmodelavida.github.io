@@ -115,6 +115,10 @@ disp4: 'none', disp5: 'none', clocktext:'', clocklink:'', dx: 0, dy:
     clockState.hoursClock = newNow.getHours();
 
     var dateNum = newNow.getFullYear() * 10000 + (newNow.getMonth() + 1) * 100 + newNow.getDate();
+    clockState.year = newNow.getFullYear();
+    clockState.month = newNow.getMonth() + 1;
+    clockState.day = newNow.getDate();
+
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate()-1);
     var yestDateNum = yesterday.getFullYear() * 10000 + (yesterday.getMonth() + 1) * 100 + yesterday.getDate();
@@ -828,9 +832,9 @@ return ret;
 					
 
 			<div className="unit whole center sunrise ztop">
-			  Fecha: {this.format(this.state.dateNum)}&nbsp;
+			  Fecha: {this.state.year}/{this.format(this.state.month)}/{this.format(this.state.day)}&nbsp;
 			  Hora: {this.format(this.state.hoursClock)}:{this.format(this.state.minutesClock)}:{this.format(this.state.secsDisp%60)}
-		&nbsp; Alba: {this.state.sunriseHour%12}:
+		&nbsp; Alba: {this.format(this.state.sunriseHour%12)}:
         {this.format(this.state.sunriseMinute%60)}&nbsp;Mayor: <i>{this.state.majorName}</i> ({this.format(this.state.majorMins)}:{this.format(this.state.majorSecs)})&nbsp;Menor: <i>{this.state.minorName}</i>  ({this.format(this.state.minorMins)}:{this.format(this.state.minorSecs)})
         </div>
 	<div className="unit whole left">
