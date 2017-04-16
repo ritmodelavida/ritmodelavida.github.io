@@ -46,7 +46,7 @@ ct.clearRect(0,0,minwh,minwh);
 //ct.rotate(dr*Math.PI/180);
 ct.drawImage(im, dx*minwh
 //+(dw*minwh*0.1)
-, dy*minwh, dw*minwh/**0.9*/, dh*minwh/**0.9*/);
+, dy*minwh, dw*minwh*1.05, dh*minwh*1.05);
 }
 
 
@@ -1211,8 +1211,8 @@ return ret;
     <div className="unit half center">
     <div className="grid no-gutters">
       <div className="unit four-fifths center">
-      <div className="unit one-fifth">&nbsp;</div>
-  <div className="unit three-fifths">
+      <div className="unit one-quarter">&nbsp;</div>
+  <div className="unit three-quarters">
   <div className="unit one-fifth center">
     <img className="img minor pull-right" src="img/Akash.jpg"
     alt="Image"
@@ -1254,11 +1254,10 @@ return ret;
     />
   </div>
 </div>
-<div className="unit one-fifth">&nbsp;</div>
 </div>
 <div className="unit four-fifths center">
-      <div className="unit one-fifth">&nbsp;</div>
-  <div className="unit three-fifths">
+      <div className="unit one-quarter">&nbsp;</div>
+  <div className="unit three-quarters">
     <img className="img major" src="img/Akash.jpg"
     alt="Image" 
     style={{
@@ -1290,7 +1289,6 @@ return ret;
     }}
     />
   </div>
-      <div className="unit one-fifth">&nbsp;</div>
 </div>
       </div>
     </div>
@@ -1384,8 +1382,8 @@ $(document).ready( function(){
         //if ($(container).width() > minwh) {
             var minwh = $(container).width();
         //}
-	c.attr('height', minwh);
-	c.attr('width', minwh);
+	c.attr('height', minwh+(minwh*0.135));
+	c.attr('width', minwh+(minwh*0.135));
     }
     //Initial call
     respondCanvas();
