@@ -2,7 +2,7 @@
 <html> <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>MEMORIA DE LA NATURALEZA: EL RITMO DE LA VIDA - por Diógenes Ballester</title>
+<title>MEMORY OF NATURE: THE RHYTHM OF LIFE - by Diógenes Ballester</title>
 <link rel="stylesheet" type="text/css" href="css/memnat.css">
   <link rel="stylesheet" href="css/gridism.css">
 </head>
@@ -26,23 +26,27 @@ function draw() {
     var ct = c.get(0).getContext('2d');
     var container = $(c).parent();
     var x = c.width();
-    var y = c.height();
+var y = c.height();
+var w = container.width();
+var h = container.height();
 var mot = $('#main');
 var dx = mot.attr('data-drawx'),
 dy = mot.attr('data-drawy') ,
 dw = mot.attr('data-draww') ,
 dh = mot.attr('data-drawh') ,
 dr = mot.attr('data-drawr');
-//console.log(dx, dy, dw, dh, dr);
-    var minwh = x;
-    if (y < minwh) {
-        minwh = y;
+//console.log(x, y, w, h, dx, dy, dw, dh, dr);
+    var minwh = w; //x;
+    if (h < minwh) {
+        minwh = h;
     }
     var im = new Image();
 im.src = "img/Manifiesto_I_graynew_crop1_rot.jpg";
-ct.clearRect(0,0,x,y);
+ct.clearRect(0,0,minwh,minwh);
 //ct.rotate(dr*Math.PI/180);
-ct.drawImage(im, dx*minwh, dy*minwh, dw*minwh, dh*minwh);
+ct.drawImage(im, dx*minwh
+//+(dw*minwh*0.1)
+, dy*minwh, dw*minwh/**0.9*/, dh*minwh/**0.9*/);
 }
 
 
@@ -52,8 +56,8 @@ var Clock = React.createClass({
 	secs: 0, sunriseHour: 5, sunriseMinute: 56, rots: 0, sca: 1.0,
     tranx: 0, trany: 0, disp1: 'block', disp2: 'none', disp3: 'none',
 disp4: 'none', disp5: 'none', clocktext:'', clocklink:'', dx: 0, dy:
-	0, dw: 0, dh: 0, dr: 0, minutesClock:0, hoursClock:0
-};
+	0, dw: 0, dh: 0, dr: 0, minutesClock:0, hoursClock:0,
+opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',};
 	},
 	componentDidMount: function () {
 		var node      = ReactDOM.findDOMNode(this)
@@ -1063,11 +1067,16 @@ getSunriseHour(yestDateNum), getSunriseMinute(yestDateNum));
     clockState.majorSecs = clockState.majorCountdown - (clockState.majorMins * 60);
 
     var phaseTransforms = [
-    	{rots:0,sca:2.2,tranx:0,trany:0,disp1:'block',disp2:'none',disp3:'none',disp4:'none',disp5:'none'},
-      {rots:90,sca:2.0,tranx:-33,trany:0,disp1:'none',disp2:'block',disp3:'none',disp4:'none',disp5:'none'},
-      {rots:-270,sca:2.0,tranx:33,trany:0,disp1:'none',disp2:'none',disp3:'block',disp4:'none',disp5:'none'},
-      {rots:0,sca:2.0,tranx:-33,trany:0,disp1:'none',disp2:'none',disp3:'none',disp4:'block',disp5:'none'},
-      {rots:360,sca:2.0,tranx:33,trany:0,disp1:'none',disp2:'none',disp3:'none',disp4:'none',disp5:'block'},
+{rots:0,sca:2.2,tranx:0,trany:0,disp1:'block',disp2:'none',disp3:'none',disp4:'none',disp5:'none',
+opac1: '1.0', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '0.2',},
+{rots:90,sca:2.0,tranx:-33,trany:0,disp1:'none',disp2:'block',disp3:'none',disp4:'none',disp5:'none',
+opac1: '0.2', opac2: '1.0', opac3: '0.2', opac4: '0.2', opac5: '0.2',},
+{rots:-270,sca:2.0,tranx:33,trany:0,disp1:'none',disp2:'none',disp3:'block',disp4:'none',disp5:'none',
+opac1: '0.2', opac2: '0.2', opac3: '1.0', opac4: '0.2', opac5: '0.2',},
+{rots:0,sca:2.0,tranx:-33,trany:0,disp1:'none',disp2:'none',disp3:'none',disp4:'block',disp5:'none',
+opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '1.0', opac5: '0.2',},
+{rots:360,sca:2.0,tranx:33,trany:0,disp1:'none',disp2:'none',disp3:'none',disp4:'none',disp5:'block',
+opac1: '0.2', opac2: '0.2', opac3: '0.2', opac4: '0.2', opac5: '1.0',},
     ];
 
     clockState.rots = phaseTransforms[clockState.majorNum].rots;
@@ -1080,45 +1089,45 @@ getSunriseHour(yestDateNum), getSunriseMinute(yestDateNum));
     clockState.disp4 = phaseTransforms[clockState.majorNum].disp4;
     clockState.disp5 = phaseTransforms[clockState.majorNum].disp5;
 
+    clockState.opac1 = phaseTransforms[clockState.minorNum].opac1;
+    clockState.opac2 = phaseTransforms[clockState.minorNum].opac2;
+    clockState.opac3 = phaseTransforms[clockState.minorNum].opac3;
+    clockState.opac4 = phaseTransforms[clockState.minorNum].opac4;
+    clockState.opac5 = phaseTransforms[clockState.minorNum].opac5;
+
 var clockTexts = [
-'Akash, el elemento de éter, simbolizado por un óvalo negro o azul \
-índigo representa el centro de la instalación que corresponde a  la \
-pintura titulada',
-'Vayu, el elemento aire, simbolizado por un círculo de color azul \
-turquesa,  corresponde a  la pintura titulada',
-'Tejas, el elemento del fuego, simbolizado por un triángulo rojo, que \
-representa la electricidad, corresponde a la pintura titulada',
-'Prithvi, el elemento tierra, simbolizado por un cuadrado amarillo, \
-que representa la realización, corresponde a la pintura titulada',
-'Apas, el elemento del agua, simbolizado por la luna creciente blanca, \
-que representa las emociones y el magnetismo, corresponde a la pintura titulada',
+'Major Tattwa - Akash, the element of ether, symbolized by a black or indigo blue oval, which represents the center, corresponds to the painting titled',
+'Major Tattwa - Vayu, the air element, symbolized by a turquoise circle corresponds with the painting',
+'Major Tattwa - Tejas, the element of fire, symbolized by a red triangle, which represents electricity, corresponds to the painting titled',
+'Major Tattwa - Prithvi, the earth element, symbolized by a yellow square, which represents realization corresponds to the painting',
+'Major Tattwa - Apas, the element of water, symbolized by the white crescent moon, which represents emotions and magnetism corresponds to the painting'
 ];
     clockState.clocktext = clockTexts[clockState.majorNum];
 
 var linkTexts = [
-'“Manifiesto de un Arteologista”',
-'“Vayú / Respirando”',
-'“Archivos Akáshicos”',
-'“Pensamiento Taíno”',
-'“Punto de Origen”'
+'“Manifesto of an Arteologist”',
+'“Vayu / Respirando”',
+'“Akashic Archives”',
+'“Taino Thought”',
+'“Point of Origin”'
 ];
     clockState.linktext = linkTexts[clockState.majorNum];
 
 var clockTexts2 = [
-'desplegada en el piso del museo debajo de la claraboya.',
-'desplegada en la pared norte de la instalación.',
-'desplegada en la pared sur de la instalación.',
-'desplegada en la pared este de la instalación.',
-'desplegada en la pared oeste de la instalación.'
+'on the floor below the skylight.',
+'on the north wall of the installation.',
+'on the south wall of the installation.',
+'on the east wall of the installation.',
+'on the west wall of the installation.'
 ];
     clockState.clocktext2 = clockTexts2[clockState.majorNum];
 
 var clockLinks = [
-'memnat_art_es.html#akash',
-'memnat_art_es.html#vayu',
-'memnat_art_es.html#tejas',
-'memnat_art_es.html#prithvi',
-'memnat_art_es.html#apas'
+'memnat_art_en.html#akash',
+'memnat_art_en.html#vayu',
+'memnat_art_en.html#tejas',
+'memnat_art_en.html#prithvi',
+'memnat_art_en.html#apas'
 ];
     clockState.clocklink = clockLinks[clockState.majorNum];
 
@@ -1134,6 +1143,23 @@ clockState.dy = dxywh[clockState.majorNum].dy;
 clockState.dw = dxywh[clockState.majorNum].dw;
 clockState.dh = dxywh[clockState.majorNum].dh;
 clockState.dr = dxywh[clockState.majorNum].dr;
+
+var majorTexts = [
+'Major Tattwa - Akash, the element of ether, symbolized by a black or indigo blue oval, which incorporates all of the other tattwas.',
+'Major Tattwa - Vayu, the air element, symbolized by a turquoise circle, which represents unity.',
+'Major Tattwa - Tejas, the element of fire, symbolized by a red triangle, which represents energy, electricity and  perception.',
+'Major Tattwa - Prithvi, the earth element, symbolized by a yellow square, which represents realization.',
+'Major Tattwa - Apas, the element of water, symbolized by the white crescent moon, which represents emotions and magnetism.'
+];
+    clockState.majorText = majorTexts[clockState.majorNum];
+var minorTexts = [
+'Minor Tattwa - Akash, the element of ether, symbolized by a black or indigo blue oval, which incorporates all of the other tattwas.',
+'Minor Tattwa - Vayu, the air element, symbolized by a turquoise circle, which represents unity.',
+'Minor Tattwa - Tejas, the element of fire, symbolized by a red triangle, which represents energy, electricity and  perception.',
+'Minor Tattwa - Prithvi, the earth element, symbolized by a yellow square, which represents realization.',
+'Minor Tattwa - Apas, the element of water, symbolized by the white crescent moon, which represents emotions and magnetism.'
+];
+    clockState.minorText = minorTexts[clockState.minorNum];
 
 		this.setState(clockState);
 		window.requestAnimationFrame(this.tick); // resume updates at 60fps
@@ -1174,9 +1200,103 @@ return ret;
 			  drw: spring(this.state.dw, [25, 13]),
 			  drh: spring(this.state.dh, [25, 13]),
 			  drr: spring(this.state.dr, [25, 13]),
+			  opac1: this.state.opac1,
+			  opac2: this.state.opac2,
+			  opac3: this.state.opac3,
+			  opac4: this.state.opac4,
+			  opac5: this.state.opac5,
 				}}>
-				{({hours,mins,secs,rots,sca,tranx,trany,disp1,disp2,disp3,disp4,disp5,clocktext,clocklink,linktext,clocktext2,drx,dry,drw,drh,drr}) =>
-
+				{({hours,mins,secs,rots,sca,tranx,trany,disp1,disp2,disp3,disp4,disp5,clocktext,clocklink,linktext,clocktext2,drx,dry,drw,drh,drr,opac1,opac2,opac3,opac4,opac5}) =>
+<div className="grid">
+    <div className="unit half center">
+    <div className="grid no-gutters">
+      <div className="unit four-fifths center">
+      <div className="unit one-fifth">&nbsp;</div>
+  <div className="unit three-fifths">
+  <div className="unit one-fifth center">
+    <img className="img minor pull-right" src="img/Akash.jpg"
+    alt="Image"
+    style={{
+    opacity: `${opac1}`,
+    }}
+    />
+  </div>
+  <div className="unit one-fifth center">
+    <img className="img minor pull-right" src="img/vayuRecrop.jpg"
+    alt="Image" 
+    style={{
+    opacity: `${opac2}`,
+    }}
+    />
+  </div>
+  <div className="unit one-fifth center">
+    <img className="img minor" src="img/tejas.jpg"
+    alt="Image" 
+    style={{
+    opacity: `${opac3}`,
+    }}
+    />
+  </div>
+  <div className="unit one-fifth center">
+    <img className="img minor pull-left" src="img/prithvi.jpg"
+    alt="Image" 
+    style={{
+    opacity: `${opac4}`,
+    }}
+    />
+  </div>
+  <div className="unit one-fifth center">
+    <img className="img minor pull-left" src="img/apas.jpg"
+    alt="Image" 
+    style={{
+    opacity: `${opac5}`,
+    }}
+    />
+  </div>
+</div>
+<div className="unit one-fifth">&nbsp;</div>
+</div>
+<div className="unit four-fifths center">
+      <div className="unit one-fifth">&nbsp;</div>
+  <div className="unit three-fifths">
+    <img className="img major" src="img/Akash.jpg"
+    alt="Image" 
+    style={{
+    display: `${disp1}`,
+    }}
+    />
+    <img className="img major" src="img/vayuRecrop.jpg"
+    alt="Image" 
+    style={{
+    display: `${disp2}`,
+    }}
+    />
+    <img className="img major" src="img/tejas.jpg"
+    alt="Image" 
+    style={{
+    display: `${disp3}`,
+    }}
+    />
+    <img className="img major" src="img/prithvi.jpg"
+    alt="Image" 
+    style={{
+    display: `${disp4}`,
+    }}
+    />
+    <img className="img major" src="img/apas.jpg"
+    alt="Image" 
+    style={{
+    display: `${disp5}`,
+    }}
+    />
+  </div>
+      <div className="unit one-fifth">&nbsp;</div>
+</div>
+      </div>
+    </div>
+<div className="unit half center">
+<div className="grid no-gutters">
+  <div className="unit four-fifths right">
 			<div id="main" role="main"
 			  data-drawx={`${drx}`}
 			  data-drawy={`${dry}`}
@@ -1187,38 +1307,46 @@ return ret;
 	    <canvas id="respondCanvas" width="100" height="100">
       Canvas not supported in your browser.
 	    </canvas>
+			</div>
+</div>
     </div>
-
-
+    </div>
+</div>
 			  }
 					</Motion>
-					
-
-			<div className="unit whole center sunrise ztop">
-			  Fecha: {this.state.year}/{this.format(this.state.month)}/{this.format(this.state.day)}&nbsp;
-			  Hora: {this.format(this.state.hoursClock)}:{this.format(this.state.minutesClock)}:{this.format(this.state.secsDisp%60)}
-		&nbsp; Alba: {this.format(this.state.sunriseHour%12)}:
-        {this.format(this.state.sunriseMinute%60)}&nbsp;Mayor: <i>{this.state.majorName}</i> ({this.format(this.state.majorMins)}:{this.format(this.state.majorSecs)})&nbsp;Menor: <i>{this.state.minorName}</i>  ({this.format(this.state.minorMins)}:{this.format(this.state.minorSecs)})
+<div className="unit whole center sunrise ztop">
+Date: {this.state.year}/{this.format(this.state.month)}/{this.format(this.state.day)}&nbsp;
+Time: {this.format(this.state.hoursClock)}:{this.format(this.state.minutesClock)}:{this.format(this.state.secsDisp%60)}
+		&nbsp; Dawn: {this.format(this.state.sunriseHour%12)}:
+        {this.format(this.state.sunriseMinute%60)} &nbsp;Major: <i>{this.state.majorName}</i> ({this.format(this.state.majorMins)}:{this.format(this.state.majorSecs)})&nbsp;Minor: <i>{this.state.minorName}</i> ({this.format(this.state.minorMins)}:{this.format(this.state.minorSecs)})
         </div>
 	<div className="unit whole left">
-	  <p className="" >{this.state.clocktext} &nbsp;
-	  <a href={this.state.clocklink}><i>{this.state.linktext}</i></a> {this.state.clocktext2}
-	  </p>
-	  <p className="">
-	 Cada <i>Tattwa</i>  se cree la principal fuerza vibratoria
-	  de la energía en la tierra durante 24 minutos en su
-	  rotación durante todo el día. El reloj digital universal en
-	  esta página está sincronizado con las imágenes de las
-	  figuras en las bicicletas representadas en  la pintura
-	  desplegada en el piso del museo. A medida que los <i>Tattwas</i> se
-	  mueven de una energía a la siguiente, según lo medido por el
-	  reloj universal, la imagen en la página gira e indica la
-	  dirección del <i>Tattwa</i> como la fuerza principal de energía
-	  durante este periodo de tiempo y centraliza su atención
-	  hacia la dirección y la pintura correspondiente que para el
-	  artista es un símbolo de este <i>Tattwa</i>.
-	  </p>
-	</div>
+	  {this.state.clocktext} &nbsp;
+	  <a
+	  href={this.state.clocklink}><i>{this.state.linktext}</i></a> {this.state.clocktext2}
+	  </div>
+	  
+<div className="unit whole left">{this.state.minorText}
+</div>
+<div className="unit whole left">Each <i>Tattwa</i> is believed to be the major
+			  vibrating force of energy on the earth for
+			  24 minutes in rotation through out the
+			  day. The universal digital clock on this
+			  page is synchronized with images of the
+			  figures on bikes replicated from the floor
+			  painting. As the <i>Tattwa</i> moves from
+			  one energy to the next, as measured by the
+			  universal clock, the image on this page
+			  rotates to indicate the <i>Tattwa</i> that
+  is the major energy force during this time frame and focus your
+  attention towards the direction and painting that to the artist is
+  symbolic of that <i>Tattwa</i>.
+</div>
+<div className="unit whole left">Besides the major <i>Tattwa</i> vibation of energy rotating every 24 minutes, each <i>Tattwa</i> has a minor vibration within the 24 minutes, which rotates every four minutes, forty-eight seconds. Thus the combination of the major and minor <i>Tattwas</i> determine  energy variations such that there are five rotations of major <i>Tattwas</i> vibrations every two hours and 25  variations of combined major and minor vibrations every 2 hours (120 minutes).
+ </div>
+<div className="unit whole left">The images on this page, tied to the universal digital clock, show the symbols of the major and the minor vibrations of energy within each of the five <i>Tattwas</i>. The major <i>Tattwa</i> during each rotating 24 minutes is depicted by the central painting of the symbol and color for each <i>Tattwa</i>. The minor <i>Tattwas</i> during each of five rotating four minutes forty-eight second periods are depicted by the smaller painting on the top that is lit up during that time frame.
+ </div>
+
 			</div>
 		);
 	}
@@ -1236,15 +1364,15 @@ $(document).ready( function(){
     $(window).resize( respondCanvas );
     
     function respondCanvas(){
-	//console.log('respondCanvas() width', $(container).width(),
-	//'height', $(container).height(), 'win.innerWidth',
-	//window.innerWidth, 'win.innerHeight', window.innerHeight);		
-        var minwh = $(container).height();
-        if ($(container).width() < minwh) {
-            minwh = $(container).width();
-        }
-	c.attr('height', window.innerWidth - 80);
-	c.attr('width', window.innerWidth - 80);
+	console.log('respondCanvas() width', $(container).width(),
+	'height', $(container).height(), 'win.innerWidth',
+	window.innerWidth, 'win.innerHeight', window.innerHeight);		
+        //var minwh = $(container).height();
+        //if ($(container).width() > minwh) {
+            var minwh = $(container).width();
+        //}
+	c.attr('height', minwh);
+	c.attr('width', minwh);
     }
     //Initial call
     respondCanvas();
@@ -1284,10 +1412,10 @@ ReactDOM.render(<ClockExample />, document.getElementById('app'));
 
 <div class="grid">
 <div class="unit whole center ztop">
-  <strong class="ztop clockText">MEMORIA DE LA NATURALEZA: EL RITMO DE LA VIDA</strong>
+  <strong class="ztop clockText">MEMORY OF NATURE: THE RHYTHM OF LIFE</strong>
 </div>
 <div class="unit whole center ztop clockText">
-  por Diógenes Ballester
+  by Diógenes Ballester
 </div>
 
 <div class="unit center" id="app"></div>
@@ -1296,25 +1424,23 @@ ReactDOM.render(<ClockExample />, document.getElementById('app'));
 <div class="unit whole center ztop">
     <nav>
 
-  <a  href="memnat_intro_es.html">Introducción</a> &nbsp;
-  <a  href="memnat_stmt_es.html">Declaratoria</a> &nbsp;
-  <a  href="memnat_manif_es.html">Manifiesto</a> &nbsp;
-  <b>Reloj 1</b>&nbsp; 
-  <a  href="memnat_clock2_es.html">Reloj 2</a> &nbsp;
-  <a  href="memnat_clock3_es.html">Reloj 3</a> &nbsp;
-  <a  href="memnat_art_es.html">Vistas de la Instalación</a>
+  <a  href="memnat_intro_en.html">Foreword</a> &nbsp;
+  <a  href="memnat_stmt_en.html">Statement</a> &nbsp;
+  <a  href="memnat_manif_en.html">Manifesto</a> &nbsp;
+  <a  href="memnat_clock1_en.html">Clock 1</a>&nbsp; 
+  <a  href="memnat_clock2_en.html">Clock 2</a> &nbsp;
+  <b>Clock 3</b>&nbsp;
+  <a  href="memnat_art_en.html">Views of Installation</a>
     </nav>
-
-</div>
 
 </div>
 
 <div class="unit whole center ztop clockText">
-    <nav>
-
-  <a href="memnat_clock1_en.html">English</a> &nbsp;
-    </nav>
-
+  <nav>
+  
+  <a href="memnat_clock3_es.html">Español</a> &nbsp;
+  </nav>
+  
 </div>
 <div class="unit whole center"></div>
   <p class="p8"><br></p>
